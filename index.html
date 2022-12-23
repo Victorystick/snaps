@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Segersvärds Julsånger</title>
+<style>
+/*
+ christmas red: #d42426;
+*/
+* {
+	-webkit-tap-highlight-color: transparent;
+	box-sizing: border-box;
+}
+
+html, body {
+	/*background: #d42426;*/
+	background: rgb(151, 50, 40);
+	margin: 0;
+	min-width: 100%;
+	font-family: Roboto, sans-serif;
+}
+
+#top-bar {
+	/*background-color: #eee;*/
+	/*border-bottom: 1px solid #ccc;*/
+	background-color: #d42426;
+	box-shadow: 0px 3px 5px rgba(0 ,0, 0, 0.2);
+	color: white;
+	height: 50px;
+	line-height: 50px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+#top-bar img {
+	float: left;
+	height: 50px;
+	padding: 10px;
+	width: 50px;
+}
+
+#top-bar svg.material-icon {
+	fill: white;
+}
+
+#top-bar h1 {
+	font-size: 20px;
+	font-weight: normal;
+	margin: 0;
+}
+
+.page h2 {
+	text-align: center;
+}
+
+.page .slogan {
+	font-style: italic;
+  color: grey;
+  font-size: small;
+  text-align: center;
+}
+
+.top {
+	padding: 0 5px;
+	height:	40px;
+	border-bottom: 1px solid black;
+	line-height: 40px;
+	background: #444;
+	background-image: linear-gradient(bottom, red 10%, black 90%);
+}
+
+.page {
+	background-color: white;
+	border-radius: 2px;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+	margin: 60px auto;
+	max-width: 500px;
+	min-width: 300px;
+	padding: 10px 0;
+	transition: 0.5s transform;
+}
+
+.page p, span.melody, span.skal {
+	padding-left: 20px;
+}
+
+.page ul {
+	padding-left: 10px;
+}
+
+.page p {
+	font-size: 15px;
+}
+
+.page p i {
+	color: #666;
+}
+
+h1 {
+	margin-bottom: 0;
+}
+
+h2 {
+	margin-top: 0;
+}
+
+span.melody {
+	color: #444;
+	font-size: 14px;
+	font-style: italic;
+}
+
+span.melody::before {
+	content: 'Melodi: ';
+}
+
+a {
+	text-decoration: none;
+}
+
+svg.material-icon {
+	float: left;
+	height: 50px;
+	padding: 13px;
+	width: 50px;
+}
+
+.page img {
+	display: block;
+	width: 80%;
+	margin: 0 auto;
+}
+
+li {
+	list-style-type: none;
+}
+
+a.button, li a {
+	color: #330;
+}
+
+li {
+	font-size: 17px;
+	display: block;
+	margin: 3px;
+	padding: 5px 7px;
+	width: 90o%;
+}
+
+@media screen and (min-width: 500px) {
+	.page h2 {
+		font-size: 28px;
+	}
+
+	.page .melody {
+		font-size: 15px;
+	}
+
+	.page p {
+		font-size: 20px;
+	}
+}
+
+.hidden {
+  visibility: hidden;
+}
+</style>
+</head>
+<body>
+<div id="top-bar">
+  <svg id="back-button" class="hidden material-icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+  </svg>
+  <h1>Segersvärds Sånghäfte</h1>
+</div>
+<div class="page" style="transform: translateY(100vh)">
+  <ul id='song-list'></ul>
+  <div id='song' style="display:none">
+    <h2></h2>
+    <span class="melody">Midnatt råder</span>
+    <p></p>
+  </div>
+  <div class="slogan">Underlättar julaftonar sedan Vilan 2014</div>
+</div>
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<script>
+var list = document.querySelector('#song-list');
+
+function setSongs(songs) {
+  songs.forEach(function (song, i) {
+    var item = document.createElement('li');
+    item.textContent = song.name;
+    list.appendChild(item);
+
+    item.addEventListener('click', () => renderSong(song));
+  });
+
+  var page = document.querySelector('.page');
+  page.style.transform = '';
+
+  return list;
+}
+
+const songs = [
+	{
+	"name": "Den som spar han har",
+	"melody": "Nu är glada julen slut",
+	"text": "Om man bara tar en smutt, smutt, smutt\nUtav denna lilla hutt, hutt, hutt\nHar man ganska mycket kvar\nMen se den som spar han har\nInte särskilt roligt"
+	},
+	{
+	"name": "Dominoeffekten",
+	"melody": "Nu har vi ljus här i vårt hus",
+	"text": "Ta dej ett rus! Drick vad som bju's!\nUnna dej några droppar spiritus!\nNär du blir sned, ställ dej på led!\nFölj julens sed!\nNär vi ställt oss hela tjocka släkten,\nska vi leka dominoeffekten:\nfaller far, faller farfars far,\nfaller du och ja, faller alla."
+	},
+	{
+	"name": "Julesnapsen",
+	"melody": "Jungfru, jungfru, jungfru, jungfru skär",
+	"text": "Jule-snapsen kommit på vårt bord,\ntöm nu lilla supen, käpprätt ner i strupen.\nHelan för de stora, halvan för de små, \nskynda på, skynda på, nu skall alkoholet gå.\n[svälj först och sjung sedan]\n|: För ha, ha, ha, det gick ju så bra \nför Andersson och Pettersson\noch Lundström o' ja :|"
+	},
+	{
+	"name": "Julkalaset",
+	"melody": "Gläns över sjö och strand",
+	"text": "Gläns över bord och fat\npärlan den kära\ndu som till julemat\nkräves att tära.\nPärlan i bättre hem\ntages med fart och kläm.\nBlandas till underbart julrus kalaset\nskåla med härligt klar pärla i glaset!"
+	},
+	{
+	"name": "Julsnapsvisa",
+	"melody": "En sockerbagare",
+	"text": "Den svenska julen har så många smaker\nsom sill och skinka och pepparkaker.\nOch glöm sen inte all kryddad sprit.\nFör svenska julen är sällan vit!\n\nSå skön som liljan är uppå sin stängel\nstår supen där som en långbent ängel.\nOch härligt iskall och upphälld nyss\nså smakar den som en änglakyss."
+	},
+	{
+	"name": "Morsgrisar",
+	"melody": "Morsgrisar är vi allihopa",
+	"text": "Morsgrisar små skall inte supa\nför de stupa\nallihupa.\nVi vill ha brännvin hällt med skupa\ni vår djupa\nstrupa.\nNu med, [supen tas]\noch nu med. [shupen tas]\nNu med, [tupen shnaas]\noch nu med. [schnaapsch]"
+	},
+  {
+	"name": "Nu är det jul igen",
+	"melody": "Nu är det jul igen",
+	"text": "Nu är det jul igen,\noch nu är det kul min vän,\nför under jul ska vi ej torka.\nNej under julens helg\nska man ha en butelj,\nsom aldrig nånsin man får korka.\n\nFör julen vi i kväll,\ntar glaset med ett »hell»,\noch det bör höras till Mallorca,\natt det är jul igen,\nnu är det kul, min vän,\nför halsen den får inte torka."
+  },
+  {
+	"name": "Nu har vi sprit",
+	"melody": "Nu ha vi ljus här i vårt hus",
+	"text": "Nu har vi sprit, brunröd och vit\nsnapsar på bordet\nhopp-tra-la-la-hick!\nFlaskor i ring dansar omkring,\ndansar omkring.\nNäsan lyser röd och grann i centrum\novanför det hål, som skall bli väntrum\nför den nubbe, som varje snubbe,\npå denna julfest vill ha."
+  },
+  {
+	"name": "Ser du stjärnan",
+	"melody": "When You Wish Upon a Star",
+	"text": "Ser du stjärnan i det blå?\nTa en sup så ser du två.\nTar du mera, ser du flera\nstjärnor små."
+  },
+  {
+	"name": "Staffansvisan",
+	"melody": "Staffan var en stalledräng",
+	"text": "Staffan var en stalledräng\nmen inte någon stjärna.\nHan gilla' inte att gå hem\ndit gick inte gärna.\n\"Ingen dager synes än\ndärför stannar jag till fem,\"\nsa Staffan."
+  },
+  {
+	"name": "Stopp en stund",
+	"melody": "Räven raskar över isen",
+	"text": "Stopp en stund med skratt och pratet.\nKniv och gaffel lägg på fatet.\nSeden är, att så här\nman handskas med destillatet.\n\nMan lyfter glaset med höger hand\noch trycker läpparna mot dess rand.\nMan dricker ur och grinar sur\noch väntar på resultatet."
+  },
+  {
+	"name": "Tipp-Tapp",
+	"melody": "Tomtarnas julnatt",
+	"text": "Alla sova, tyst det är i huset, tyst i huset.\nFarmor snarkar, sover av sig ruset, av sig ruset.\nTipp, tapp, tipp, tapp,\ntippetippetipp, tapp,\ntipp, tipp, tapp.\n\nRäven raskar, raskar över taken, över taken.\nGröna tomtar håller mamma vaken, mamma vaken.\nTipp, tapp, tipp, tapp,\ntippetippetipp, tapp,\ntipp, tipp, tapp."
+  },
+  {
+    "name": "En kopparslagare",
+    "melody": "En sockerbagare",
+    "text": "En kopparslagare här bor i staden.\nHan får nog jobb under morgondagen.\nVi tar en nubbe, ja fler ändå,\nså han får pannor att banka på.",
+  },
+  {
+    "name": "O helga sup",
+    "melody": "O helga natt",
+    "text": "O helga sup, o helga sup för magen\ndå gudagåvan i strupen slank ned.\nTill för att läka inre brott, så ta en\nså att den kommer in i minsta led.\nOch mörkrets stråle går igenom tarmen,\noch värmer upp de vägar som den tar.\n\nSup, fall nu neder,\noch hälsa glatt min mage.\nO, helga sup, du värme åt mig gav.\nO, helga sup, du lycklig värme gav!",
+  },
+];
+
+songs.sort((a, b) => a.name.localeCompare(b.name));
+
+let currentContent = setSongs(songs);
+
+const backButton = document.querySelector('#back-button');
+
+function renderSong({name, melody, text}) {
+  currentContent.style.display = 'none';
+  const song = document.querySelector('#song');
+  song.style.display = '';
+
+  song.querySelector('h2').textContent = name;
+  song.querySelector('.melody').textContent = melody;
+	song.querySelector('p').innerHTML = text.split('\n').join('<br>');
+
+  backButton.classList.toggle('hidden', false);
+  currentContent = song;
+}
+
+backButton.addEventListener('click', () => {
+  backButton.classList.add('hidden');
+  currentContent.style.display = 'none';
+  list.style.display = '';
+
+  currentContent = list;
+});
+</script>
+</body>
+</html>
